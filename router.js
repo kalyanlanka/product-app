@@ -72,6 +72,8 @@ module.exports = function(app) {
 
     productRoutes.post('/insert',ProductController.insert);
 
+    productRoutes.post('/query',ProductController.query);
+
     // Set url for API group routes
     app.use('/api', apiRoutes);
     app.get('/',function(req,res){

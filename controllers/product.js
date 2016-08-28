@@ -2,7 +2,7 @@
 const Product = require('../models/product');
 
 exports.insert = function(req,res,next){
-  var product = new Product();
+  const product = new Product();
   product.name = req.body.name;
   product.type = req.body.type;
   product.description = req.body.description;
@@ -19,6 +19,27 @@ exports.insert = function(req,res,next){
 
 }
 
-exports.findByType = function(req,res,next){
+exports.query = function(req,res,next){
+
+  const type = req.body.type;
+  if (type){
+    Product.find({
+      type: type
+    }).
+    select({name:1,description: 1, isAvailable: 1}).
+    exec(function(err,products){
+      if (err){
+          return res.status(400).json({status:'Fail',message:err});
+      } else {
+        if (products.length == 0){
+            return res.status(400).json({status:'Fail',message:'No records found'});
+        }
+        return res.status(200).json(products);
+      }
+    });
+
+  } else {
+    return res.status(400).json({status:'Fail',message:'Type is required'});
+  }
 
 }
