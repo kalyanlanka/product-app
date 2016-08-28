@@ -34,7 +34,6 @@ exports.login = function(req,res,next){
 
 
 exports.register = function(req,res,next){
-  console.log('inside register');
   const email = req.body.email;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
